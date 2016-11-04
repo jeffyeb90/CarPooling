@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+ <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery-1.12.1.js"></script>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+ <script>
+   var userAgent = navigator.userAgent + '';
+   if (userAgent.indexOf('iPhone') > -1) {
+     document.write('<script src="js/cordova-iphone.js"></sc' + 'ript>');
+     var mobile_system = 'iphone';
+   } else if (userAgent.indexOf('Android') > -1) {
+     document.write('<script src="js/cordova-android.js"></sc' + 'ript>');
+     var mobile_system = 'android';
+   } else {
+     var mobile_system = '';
+   }
+ </script>
+
+
+</head>
+<body>
+  <div class="container">
+
+  <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+      	<form>
+          <a class="navbar-brand" ><span class="glyphicon glyphicon-registration-mark"></span>
+      KASANOMA CARPOOL
+          </a>
+
+
+					<div class="form-group">
+						 <div id="error">
+										<!-- error will be shown here ! -->
+						 </div>
+						 </div>
+  			<hr class="colorgraph">
+
+
+        <div class="form-group">
+          <input type="text" name="fullname" id="fullname" class="form-control input-lg" placeholder="Full Name" tabindex="3">
+        </div>
+  			<div class="form-group">
+  				<input type="text" name="username" id="username" class="form-control input-lg" placeholder="User Name" tabindex="3">
+  			</div>
+  			<div class="form-group">
+  				<input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
+  			</div>
+  			<div class="row">
+  				<div class="col-xs-12 col-sm-6 col-md-6">
+  					<div class="form-group">
+  						<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+  					</div>
+  				</div>
+  				<div class="col-xs-12 col-sm-6 col-md-6">
+  					<div class="form-group">
+  						<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+  					</div>
+  				</div>
+                   	<div class="col-xs-12 col-sm-6 col-md-6">
+            					<div class="form-group">
+            						<input type="tel" name="phonenum" id="phonenum" class="form-control input-lg" placeholder="233272430509" tabindex="2">
+            					</div>
+            				</div>
+  			</div>
+
+  			<hr class="colorgraph">
+  			<div class="row">
+  				<div class="col-xs-12 col-md-6">
+         <a href=# id="subt" type="submit" class="btn btn-primary btn-lg btn-block" > <span class="glyphicon glyphicon-ok"> </span> Register</a>
+
+          <a href='index.html'class="btn btn-default btn-lg btn-block" style="color: #404040"> <span class="glyphicon glyphicon-arrow-left"> </span> Back</a>
+          </div>
+
+  			</div>
+				<div id="check">
+														 <!-- error will be shown here ! -->
+			 </div>
+  		</form>
+  	</div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  	<div class="modal-dialog modal-lg">
+
+  	</div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  </div>
+
+  <script >
+  document.getElementById("subt").addEventListener("click", signUp);
+
+   function signUpComplete(xhr, status){
+     if(status=="success"){
+
+		var obj=JSON.parse(xhr.responseText);
+
+
+ if(obj.result==1){
+ if(obj.message=="Username already exists"){
+		alert(obj.message + " Enter new username");
+		//setTimeout('window.location.href= "index.html";', 500);
+	//	return;
+}
+ else if(obj.message=="Sign Up successful"){
+	alert(obj.message + " Please Log In");
+	window.location.href= "index.html";
+//return;
+}
+else{
+	alert(obj.message);
+}
+}
+}
+else{
+	if(obj.result==0){
+ alert(obj.message);
+}
+
+}
+
+       //alert(obj);
+    //console.log(xhr.responseText);
+}
+
+   function signUp(){
+
+    var fullname=$("#fullname").val();
+		var username=$("#username").val();
+     var email=$("#email").val();
+     var password=$("#password").val();
+       var phonenum=$("#phonenum").val();
+var passC =$("#password_confirmation").val()
+     var ajaxPageUrl="serverComm.php?cmd=1&fullname="+fullname+"&username="+username+"&email="+email+"&password="+password+"&phonenum="+phonenum+"&password_confirmation="+passC;
+     $.ajax(ajaxPageUrl,
+  {async:true,complete:signUpComplete	}
+     );
+   }
+  </script>
+
+
+     <!-- Include all compiled plugins (below), or include individual files as needed -->
+     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/platformOverrides.js"></script>
+
+
+
+</body>
+</html>
